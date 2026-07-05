@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kampung Ciceri Jaya</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="navbar">
+        <div class="brand">Ciceri Jaya</div>
+        <div class="nav-links">
+          <a href="#keuangan">Keuangan</a>
+          <a href="#penduduk">Penduduk</a>
+          <a href="#kegiatan">Kegiatan</a>
+          <button class="nav-btn" id="loginBtn" type="button">Login Admin</button>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow">Desa Cerdas dan Tertib</p>
+          <h1>Website resmi Kampung Ciceri Jaya</h1>
+          <p>
+            Pantau keuangan desa, catat warga, dan lihat agenda penting kampung secara praktis.
+          </p>
+          <a class="btn" href="#keuangan">Lihat Fitur</a>
+        </div>
+        <div class="hero-card">
+          <div class="logo-badge">🌿</div>
+          <h3>Ringkasan Hari Ini</h3>
+          <ul>
+            <li>Saldo kas desa: Rp </li>
+            <li>Rapat warga: 20.00 WIB</li>
+            <li>Posyandu: Sabtu pagi</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel profile-panel">
+        <div class="profile-card">
+          <div class="profile-content">
+            <h2>Profil Kampung Ciceri Jaya</h2>
+            <p>
+              Kampung Ciceri Jaya adalah desa yang mengedepankan gotong royong, ketertiban, dan pelayanan masyarakat yang baik.
+            </p>
+            <ul>
+              <li>Visi: Menjadi kampung yang maju, bersih, dan sejahtera.</li>
+              <li>Misi: Memperkuat kerja sama warga, pengelolaan keuangan tertib, dan pelayanan desa yang responsif.</li>
+            </ul>
+          </div>
+          <div class="profile-badge">CICERI JAYA</div>
+        </div>
+      </section>
+
+      <section class="panel summary-panel">
+        <div class="section-title">
+          <h2>Dashboard Desa</h2>
+          <p>Ringkasan cepat kondisi kampung Ciceri Jaya.</p>
+        </div>
+        <div class="quick-nav">
+          <a href="#keuangan" class="quick-link">Keuangan</a>
+          <a href="#penduduk" class="quick-link">Penduduk</a>
+          <a href="#laporan" class="quick-link">Laporan</a>
+          <a href="#pengumuman" class="quick-link">Pengumuman</a>
+        </div>
+        <div class="stats-grid" id="dashboardStats"></div>
+      </section>
+
+      <section id="keuangan" class="panel">
+        <div class="section-title">
+          <h2>Keuangan Desa</h2>
+          <p>Catatan pemasukan dan pengeluaran kampung.</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="content-grid">
+          <form id="financeForm" class="card form-card admin-only hidden">
+            <h3>Tambah Catatan</h3>
+            <label>
+              Jenis
+              <select id="type" required>
+                <option value="Pemasukan">Pemasukan</option>
+                <option value="Pengeluaran">Pengeluaran</option>
+              </select>
+            </label>
+            <label>
+              Nominal
+              <input id="amount" type="number" min="1000" required />
+            </label>
+            <label>
+              Keterangan
+              <input id="description" type="text" placeholder="Contoh: Sumbangan warga" required />
+            </label>
+            <label>
+              Tanggal
+              <input id="date" type="date" required />
+            </label>
+            <button type="submit" class="btn">Simpan</button>
+          </form>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Riwayat Transaksi</h3>
+              <button id="exportFinanceBtn" type="button" class="ghost-btn">Export CSV</button>
+            </div>
+            <div class="filter-row">
+              <input id="financeFilterDate" type="date" />
+              <select id="financeFilterType">
+                <option value="">Semua</option>
+                <option value="Pemasukan">Pemasukan</option>
+                <option value="Pengeluaran">Pengeluaran</option>
+              </select>
+            </div>
+            <ul id="transactionList" class="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="penduduk" class="panel alt-panel">
+        <div class="section-title">
+          <h2>Catatan Penduduk Desa</h2>
+          <p>Kelola daftar warga dan catatan penting.</p>
+        </div>
+
+        <div class="content-grid">
+          <form id="residentForm" class="card form-card admin-only hidden">
+            <h3>Tambah Catatan Warga</h3>
+            <label>
+              Nama
+              <input id="residentName" type="text" required />
+            </label>
+            <label>
+              Keterangan
+              <input id="residentNote" type="text" placeholder="Contoh: Bantuan sosial" required />
+            </label>
+            <label>
+              Status
+              <select id="residentStatus">
+                <option value="Aktif">Aktif</option>
+                <option value="Prioritas">Prioritas</option>
+                <option value="Perlu Pantauan">Perlu Pantauan</option>
+              </select>
+            </label>
+            <button type="submit" class="btn">Simpan</button>
+          </form>
+
+          <div class="card">
+            <div class="card-header">
+              <input id="searchInput" type="text" placeholder="Cari nama warga..." class="search" />
+              <div class="action-group">
+                <select id="residentFilterStatus">
+                  <option value="">Semua Status</option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Prioritas">Prioritas</option>
+                  <option value="Perlu Pantauan">Perlu Pantauan</option>
+                </select>
+                <button id="resetDataBtn" type="button" class="ghost-btn">Reset Data</button>
+                <button id="exportResidentBtn" type="button" class="ghost-btn">Export CSV</button>
+              </div>
+            </div>
+            <ul id="residentList" class="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="laporan" class="panel">
+        <div class="section-title">
+          <h2>Laporan Ringkas</h2>
+          <p>Ringkasan data desa yang siap dipakai untuk rapat atau arsip.</p>
+        </div>
+        <div class="card report-card">
+          <div class="card-header">
+            <h3>Rekap Desa</h3>
+            <button id="printReportBtn" type="button" class="ghost-btn">Cetak / PDF</button>
+          </div>
+          <div class="report-grid">
+            <div>
+              <h4>Saldo Kas</h4>
+              <p id="reportBalance">-</p>
+            </div>
+            <div>
+              <h4>Total Pemasukan</h4>
+              <p id="reportIncome">-</p>
+            </div>
+            <div>
+              <h4>Total Pengeluaran</h4>
+              <p id="reportExpense">-</p>
+            </div>
+            <div>
+              <h4>Warga Prioritas</h4>
+              <p id="reportPriority">-</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="berita" class="panel">
+        <div class="section-title">
+          <h2>Update Terbaru</h2>
+          <p>Berita dan informasi terkini dari kampung.</p>
+        </div>
+        <div class="announcement-grid">
+          <div class="card highlight-card">
+            <h3>Tanam Pohon Bersama</h3>
+            <p>Program penghijauan desa akan dilaksanakan minggu depan di sekitar jalan utama.</p>
+          </div>
+          <div class="card highlight-card">
+            <h3>Pelatihan Kesehatan</h3>
+            <p>Posyandu akan mengadakan pelatihan kesehatan sederhana untuk ibu-ibu rumah tangga.</p>
+          </div>
+          <div class="card highlight-card">
+            <h3>Perbaikan Fasilitas</h3>
+            <p>Perbaikan lampu jalan dan saluran air sedang diprioritaskan oleh tim desa.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pengumuman" class="panel">
+        <div class="section-title">
+          <h2>Pengumuman Desa</h2>
+          <p>Informasi penting yang perlu diketahui warga.</p>
+        </div>
+        <form id="announcementForm" class="card form-card admin-only hidden">
+          <h3>Tambah Pengumuman</h3>
+          <label>
+            Judul
+            <input id="announcementTitle" type="text" required />
+          </label>
+          <label>
+            Isi
+            <textarea id="announcementBody" rows="3" required></textarea>
+          </label>
+          <button type="submit" class="btn">Simpan</button>
+        </form>
+        <div id="announcementList" class="announcement-grid"></div>
+      </section>
+
+      <section id="kegiatan" class="panel">
+        <div class="section-title">
+          <h2>Kegiatan Mingguan</h2>
+          <p>Agenda yang sedang berjalan di kampung.</p>
+        </div>
+        <form id="activityForm" class="card form-card admin-only hidden">
+          <h3>Tambah Kegiatan</h3>
+          <label>
+            Judul
+            <input id="activityTitle" type="text" required />
+          </label>
+          <label>
+            Detail
+            <textarea id="activityBody" rows="3" required></textarea>
+          </label>
+          <button type="submit" class="btn">Simpan</button>
+        </form>
+        <div id="activityList" class="activity-grid"></div>
+      </section>
+    </main>
+
+    <div id="adminNotice" class="admin-notice hidden">
+      Anda sedang masuk sebagai admin. Anda dapat mengelola data desa.
+    </div>
+
+    <div id="loginModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="modal-card">
+        <h3 id="loginTitle">Login Admin</h3>
+        <p>Gunakan akun admin untuk mengelola keuangan dan catatan warga.</p>
+        <form id="loginForm">
+          <label>
+            Username
+            <input id="adminUsername" type="text" required />
+          </label>
+          <label>
+            Password
+            <input id="adminPassword" type="password" required />
+          </label>
+          <p id="loginError" class="error"></p>
+          <button type="submit" class="btn">Masuk</button>
+        </form>
+        <p class="hint">Default akun: admin / ciceri123</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Kampung Ciceri Jaya</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
